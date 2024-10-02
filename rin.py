@@ -282,6 +282,9 @@ def handle(msg):
         print ('Got command: %s')%command
     if command == '/time': #[ Get Local Time ]#
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
+    elif command == '/omzet': #[ Lihat Pencapaian Omzet ]#
+        x = get_omzet(chat_id, "Sob")
+        bot.sendMessage(chat_id,x)
     elif command == '/speed': #[ Run Speedtest ]#
         x = subprocess.check_output(['speedtest','--share'])
         urlb = re.search(br"(?P<url>http?://[^\s]+)", x).group("url")
