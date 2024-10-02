@@ -57,6 +57,32 @@ sql_omzet = "SELECT \
             WINDOW window_bersih AS (PARTITION BY t.x_user_id) \
             ORDER BY x_pencapaian DESC"
 
+sql_omzet_spec = "SELECT \
+            x_user_id, \
+            x_total_omzet, \
+            round((coalesce(x_total_omzet,0)/\
+            (CASE \
+            WHEN x_user_id  = 5 THEN 3838464000 \
+            WHEN x_user_id = 31 THEN 2632000000 \
+            WHEN x_user_id = 7 THEN 2132480000 \
+            WHEN x_user_id = 9 THEN 2531200000 \
+            WHEN x_user_id = 44 THEN 1442560000 \
+            WHEN x_user_id = 6 THEN 1288000000 \
+            WHEN x_user_id = 59 THEN 1442560000 \
+            WHEN x_user_id = 60 THEN 1442560000 \
+            ELSE 800000000 END)*100),2) as x_pencapaian \
+            FROM \
+            (SELECT \
+            user_id as x_user_id, \
+            SUM(amount_total) filter (WHERE  (state ='open' or state='paid') and type='out_invoice' and date_trunc('month', date_invoice) = date_trunc('month', {})) \
+            AS x_total_omzet \
+            FROM account_invoice \
+            WHERE user_id=5 or user_id=7 or user_id=9 or user_id=31 or user_id=44 or user_id=59 or user_id=60 \
+            GROUP BY x_user_id \
+            )t \
+            WINDOW window_bersih AS (PARTITION BY t.x_user_id) \
+            ORDER BY x_pencapaian DESC"
+
 def tcpCheck(ip, port, timeout):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(timeout)
