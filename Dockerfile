@@ -6,7 +6,7 @@ RUN apt update -y && \
     apt install -y curl && \
     apt install -y speedtest-cli && \
     apt install -y wget
-RUN wget https://raw.githubusercontent.com/sivel/speedtest-cli/v2.1.3/speedtest.py -O /usr/local/lib/python3.9/speedtest.py    
+RUN wget https://raw.githubusercontent.com/sivel/speedtest-cli/v2.1.3/speedtest.py -O /usr/local/lib/python3.5/speedtest.py    
 ENV API_KEY ""
 COPY requirements.txt /tmp
 RUN pip3 install -r /tmp/requirements.txt
