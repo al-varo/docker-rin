@@ -108,6 +108,7 @@ def get_draft(tele_id, nama):
         if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
             record=sql_query(sql_draft.format(9))
             if record:
+                grand_total=0
                 for row in record:
                     tgl = row[1]
                     if tgl:
