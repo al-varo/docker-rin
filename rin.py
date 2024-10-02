@@ -309,7 +309,7 @@ def handle(msg):
         return ""
     if command == '__time': #* Get Local Time *#
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
-    if command == '/getid': #[ Lihat ID telegram ]#
+    elif command == '/getid': #[ Lihat ID telegram ]#
         bot.sendMessage(chat_id, str(chat_id))
     elif command == '/omzet': #[ Lihat Pencapaian Omzet ]#
         x = get_omzet(chat_id, "Sob")
@@ -340,6 +340,9 @@ def handle(msg):
             if ")" not in val:
                 s+=str(val)
         x = s
+        bot.sendMessage(chat_id,x)
+    else:
+        x = "Untuk melihat perintah yang bisa digunakan, silahkan ketik /start atau /?"
         bot.sendMessage(chat_id,x)
 
 bot = telepot.Bot(os.getenv('API_KEY'))
