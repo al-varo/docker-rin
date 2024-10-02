@@ -106,16 +106,17 @@ def get_draft(tele_id, nama):
     user_id=get_manzada_user_id(tele_id)
     try:
         if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
-            record=sql_query(sql_draft.format(9))
+            record=sql_query(sql_draft.format(user_id))
             if record:
                 grand_total=0
                 for row in record:
                     tgl = row[1]
                     if tgl:
-                        toko = row[0]
-                        amount_total = row[2]
-                        grand_total+=amount_total
-                        text=text+"""
+                        if row[2] > 0:
+                            toko = row[0]
+                            amount_total = row[2]
+                            grand_total+=amount_total
+                            text=text+"""
 {}
 {}
 Total : {}""".format(toko, str(tgl), locale.format("%d", amount_total, 1)) + '\n'
@@ -319,6 +320,9 @@ def handle(msg):
         bot.sendMessage(chat_id, str(chat_id))
     elif command == '/omzet': #[ Lihat Pencapaian Omzet ]#
         x = get_omzet(chat_id, "Sob")
+        bot.sendMessage(chat_id,x)
+    elif command == '/draft': #[ Lihat Draft Faktur ]#
+        x = get_draft(chat_id,"Sob")
         bot.sendMessage(chat_id,x)
     elif command == '__draft':
         x = get_draft(6729032463,"Sob")
