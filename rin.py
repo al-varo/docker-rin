@@ -54,7 +54,7 @@ def handle(msg):
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
     elif command == '/speed': #[ Run Speedtest ]#
         x = subprocess.check_output(['speedtest-cli','--share'])
-        photo = re.search("(?P<url>https?://[^\s]+)", x).group("url")
+        photo = re.search(br"(?P<url>https?://[^\s]+)", x).group("url")
         bot.sendPhoto(chat_id,photo)
     elif command == '/ip': #[ Get Real IP ]#
         x = subprocess.check_output(['curl','ipinfo.io/ip'])
