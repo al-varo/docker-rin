@@ -21,7 +21,14 @@ SERVER = "app.manzada.net"
 WEBPORT = 80
 TIMEOUT = 3
 RETRY = 1
-
+sql_draft = "SELECT \
+            (SELECT name FROM res_partner WHERE id = ai.partner_id), \
+            date_invoice, \
+            amount_total, \
+            FROM \
+            account_invoice ai \
+            WHERE \
+            state = 'draft' AND type = 'out_invoice' AND user_id = {}"
 sql_omzet = "SELECT \
             x_user_id, \
             x_total_omzet, \
@@ -91,7 +98,31 @@ def sql_query(sql):
             cursor.close()
             conn_serv.close()
             return record
-
+def get_draft(tele_id, nama):
+    text=""
+    user_id=get_manzada_user_id(tele_id)
+    try:
+        if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
+            record=sql_query(sql_draft.format(user_id))
+            if record:
+                for row in record:
+                    toko = row[0]
+                    tgl = row[1]
+                    amount_total = row[2]
+                    grand_total+=amount_total
+                    text=text+"""
+{}
+{}
+Total : {}""".format(toko, str(tgl), locale.format("%d", amount_total, 1)) + '\n'
+                text=text+"\nGrand Total : {}".format(locale.format("%d", grand_total, 1))
+            else:
+                text = "Tidak ada draft"
+        else:
+            text=get_server_exception("ambil_data", "Sob")
+    except:
+            text="Gagal memproses data, silahkan dicoba lagi.."
+    return text
+    
 def get_omzet(tele_id, nama):
     current_date = datetime.date.today()
     last_date=datetime.date(current_date.year + (current_date.month == 12), 
@@ -283,7 +314,10 @@ def handle(msg):
     elif command == '/omzet': #[ Lihat Pencapaian Omzet ]#
         x = get_omzet(chat_id, "Sob")
         bot.sendMessage(chat_id,x)
-    elif command == '/speed': #[ Lihat Speed Starlink ]#
+    elif command == '__draft':
+        x = get_draft(6729032463,"Sob")
+        bot.sendMessage(chat_id,x)
+    elif command == '__speed': #* Lihat Speed Starlink *#
         x = subprocess.check_output(['speedtest','--share'])
         urlb = re.search(br"(?P<url>http?://[^\s]+)", x).group("url")
         photo = codecs.decode(urlb, encoding='utf-8')
@@ -291,10 +325,10 @@ def handle(msg):
     elif command == '__ip': #* Get Real IP *#
         x = subprocess.check_output(['curl','ipinfo.io/ip'])
         bot.sendMessage(chat_id,x)
-    elif command == '/disk': #[ Info SSD Server ]#
+    elif command == '__disk': #* Info SSD Server *#
         x = subprocess.check_output(['df', '-h'])
         bot.sendMessage(chat_id,x)
-    elif command == '/mem': #[ Info Memory Server]#
+    elif command == '/mem': #* Info Memory Server *#
         x = subprocess.check_output(['cat','/proc/meminfo'])
         bot.sendMessage(chat_id,x)
     elif command == '/stat': #[ Status BOT ]#
