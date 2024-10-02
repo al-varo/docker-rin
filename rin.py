@@ -278,6 +278,8 @@ def handle(msg):
         return ""
     if command == '/time': #[ Get Local Time ]#
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
+    if command == '/getid': #[ Lihat ID telegram ]#
+        bot.sendMessage(chat_id, str(chat_id))
     elif command == '/omzet': #[ Lihat Pencapaian Omzet ]#
         x = get_omzet(chat_id, "Sob")
         bot.sendMessage(chat_id,x)
