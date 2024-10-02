@@ -119,8 +119,8 @@ def get_draft(tele_id, nama):
                             text=text+"""
 {}
 {}
-Total : {}""".format(toko, str(tgl), locale.format("%d", amount_total, 1)) + '\n'
-                text=text+"\nGrand Total : {}".format(locale.format("%d", grand_total, 1))
+Total : {}""".format(toko, str(tgl), ribuan(amount_total)) + '\n'
+                text=text+"\nGrand Total : {}".format(ribuan(grand_total))
             else:
                 text = "Tidak ada draft"
         else:
