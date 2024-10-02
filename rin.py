@@ -8,6 +8,7 @@ import subprocess
 import os
 import sys
 from telepot.loop import MessageLoop
+import codecs
 
 
 
@@ -54,7 +55,8 @@ def handle(msg):
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
     elif command == '/speed': #[ Run Speedtest ]#
         x = subprocess.check_output(['speedtest','--share'])
-        photo = re.search(br"(?P<url>http?://[^\s]+)", x).group("url")
+        urlb = re.search(br"(?P<url>http?://[^\s]+)", x).group("url")
+        photo = codecs.decode(urlb, encoding='utf-8')
         bot.sendPhoto(chat_id,photo)
     elif command == '/ip': #[ Get Real IP ]#
         x = subprocess.check_output(['curl','ipinfo.io/ip'])
