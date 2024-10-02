@@ -12,6 +12,3 @@ services:
     environment:
       - API_KEY=6073923241:AAHUG6HNqvj8xFz31o3s-VWeYXiHCa3G0xU
       - ALLOWED_IDS=6299219117
-    volumes:
-       - /var/run/docker.sock:/var/run/docker.sock
- 
