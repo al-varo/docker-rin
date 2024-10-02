@@ -9,12 +9,14 @@ import psycopg2
 import time
 import locale
 import socket
+import random
 from dateutil.relativedelta import relativedelta
 
 SERVER = "app.manzada.net"
 WEBPORT = 80
 TIMEOUT = 3
 RETRY = 1
+locale.setlocale(locale.LC_ALL, '')
 
 #### Access credentials
 config = configparser.ConfigParser() # Define the method to read the configuration file
@@ -46,6 +48,18 @@ def check_server(ip, port, timeout, retry):
             print("Tidak terhubung...")
             time.sleep(timeout)
     return ipup
+
+def get_stat_server(nama):
+    text=""
+    if self.check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
+        resp_check=["Server [Online] :)", "Server [Online]. Tidak ada masalah di sisi server\
+        \nJika kesulitan membuka web\n1.Cek jaringan internet\n2.Kurangi beban memory HP\
+        \n3.Bersihkan cache chrome\n4.Off\On Mode pesawat\n5.Restart HP"]
+        random.shuffle(resp_check)
+        text=resp_check[0]
+    else:
+        text="Maaf {}. server sedang offline :(".format(nama)
+    return text
     
 def sql_query(sql):
     conn_serv=False
@@ -80,8 +94,6 @@ async def start(event):
     text = "Rin Bot 🤖 ready\nHello! I'm answering you from Telegram!"
     await client.send_message(SENDER, text, parse_mode="HTML")
 
-
-
 ### First command, get the time and day
 @client.on(events.NewMessage(pattern='/(?i)time')) 
 async def time(event):
@@ -91,6 +103,21 @@ async def time(event):
     text = "Received! Day and time: " + str(datetime.datetime.now())
     await client.send_message(SENDER, text, parse_mode="HTML")
 
+@client.on(events.NewMessage(pattern='/(?i)server')) 
+async def time(event):
+    # Get the sender of the message
+    sender = await event.get_sender()
+    SENDER = sender.id
+    text = get_stat_server(nama)
+    await client.send_message(SENDER, text, parse_mode="HTML")
+
+@client.on(events.NewMessage(pattern='/(?i)omzet')) 
+async def time(event):
+    # Get the sender of the message
+    sender = await event.get_sender()
+    SENDER = sender.id
+    text = get_omzet()
+    await client.send_message(SENDER, text, parse_mode="HTML")
 
 
 ### MAIN
