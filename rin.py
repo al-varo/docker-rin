@@ -33,8 +33,6 @@ sql_omzet = "SELECT \
             WHEN x_user_id = 9 THEN 2531200000 \
             WHEN x_user_id = 44 THEN 1442560000 \
             WHEN x_user_id = 6 THEN 1288000000 \
-            WHEN x_user_id = 56 THEN 2105600000 \
-            WHEN x_user_id = 58 THEN 2132480000 \
             WHEN x_user_id = 59 THEN 1442560000 \
             WHEN x_user_id = 60 THEN 1442560000 \
             ELSE 800000000 END)*100),2) as x_pencapaian \
@@ -44,7 +42,7 @@ sql_omzet = "SELECT \
             SUM(amount_total) filter (WHERE  (state ='open' or state='paid') and type='out_invoice' and date_trunc('month', date_invoice) = date_trunc('month', current_date)) \
             AS x_total_omzet \
             FROM account_invoice \
-            WHERE user_id=5 or user_id=7 or user_id=9 or user_id=31 or user_id=44 or user_id=56 or user_id=58 or user_id=59 or user_id=60 \
+            WHERE user_id=5 or user_id=7 or user_id=9 or user_id=31 or user_id=44 or user_id=59 or user_id=60 \
             GROUP BY x_user_id \
             )t \
             WINDOW window_bersih AS (PARTITION BY t.x_user_id) \
