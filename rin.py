@@ -24,7 +24,7 @@ RETRY = 1
 sql_draft = "SELECT \
             (SELECT name FROM res_partner WHERE id = ai.partner_id), \
             date_invoice, \
-            amount_total, \
+            amount_total \
             FROM \
             account_invoice ai \
             WHERE \
