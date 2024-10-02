@@ -1,14 +1,8 @@
 FROM ubuntu:latest
 
 LABEL maintainer="fauzi.mkom@gmail.com"
-RUN apt update -yqq && \
-    apt install -yqq python3-pip && \
-    apt install -yqq libffi-dev && \
-    apt install -yqq libssl-dev && \
-    apt install -yqq curl && \
-    apt install -yqq speedtest-cli && \
-    apt install -yqq wget
-
+RUN apt update
+RUN apt install python3 python3-pip libffi-dev libssl-dev curl speedtest-cli wget -y
 ENV API_KEY ""
 
 COPY requirements.txt /tmp
