@@ -3,7 +3,7 @@ version: "3.7"
 services:
   dockerbot:
     image: techblog/dockerbot
-    container_name: dockerbot
+    container_name: rin
     network_mode: host
     cap_add:
        - NET_ADMIN
