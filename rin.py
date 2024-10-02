@@ -103,7 +103,7 @@ def get_draft(tele_id, nama):
     user_id=get_manzada_user_id(tele_id)
     try:
         if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
-            record=sql_query(sql_draft.format(user_id))
+            record=sql_query(sql_draft.format(9))
             if record:
                 for row in record:
                     toko = row[0]
