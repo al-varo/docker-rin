@@ -103,7 +103,7 @@ def sql_query(sql):
             return record
 def get_draft(tele_id, nama):
     text=""
-    date_format = '%d-%m-%Y' 
+    date_format = '%Y-%m-%d' 
     user_id=get_manzada_user_id(tele_id)
     try:
         if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
@@ -114,7 +114,8 @@ def get_draft(tele_id, nama):
                     tgl = row[1]
                     if tgl:
                         if row[2] > 0:
-                            tanggal = datetime.datetime.strptime(str(tgl), date_format)
+                            tglobj = datetime.datetime.strptime(str(tgl), date_format)
+                            tanggal = tglobj.strftime("%d-m-%Y")
                             toko = row[0]
                             amount_total = row[2]
                             grand_total+=amount_total
