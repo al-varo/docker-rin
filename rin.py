@@ -169,17 +169,17 @@ def get_server_exception(tipe, nama):
 
 def get_manzada_user_id(tele_id):
     user_id = 1
-    if tele_id=='3264582853639869':
+    if tele_id == 6729032463: #Agus
         user_id=9
     if tele_id=='3941390309222663':
         user_id=31
-    if tele_id=='3724789247576364':#'3706874686003580':
+    if tele_id == 7355904419: #Tedi
         user_id=7
     if tele_id=='4937492586295334': #Agung
         user_id=44
     if tele_id=='4345408962193459':
         user_id=25
-    if tele_id=="3364431640310686":
+    if tele_id == 6169304151: #Zul
         user_id=5
     if tele_id=="4294487443937631":
         user_id=56
@@ -276,29 +276,29 @@ def handle(msg):
     if str(chat_id) not in os.getenv('ALLOWED_IDS'):
         bot.sendPhoto(chat_id,"https://github.com/t0mer/dockerbot/raw/master/No-Trespassing.gif")
         return ""
-    if command == '/time': #[ Get Local Time ]#
+    if command == '/time': #* Get Local Time *#
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
     if command == '/getid': #[ Lihat ID telegram ]#
         bot.sendMessage(chat_id, str(chat_id))
     elif command == '/omzet': #[ Lihat Pencapaian Omzet ]#
         x = get_omzet(chat_id, "Sob")
         bot.sendMessage(chat_id,x)
-    elif command == '/speed': #[ Run Speedtest ]#
+    elif command == '/speed': #[ Lihat Speed Starlink ]#
         x = subprocess.check_output(['speedtest','--share'])
         urlb = re.search(br"(?P<url>http?://[^\s]+)", x).group("url")
         photo = codecs.decode(urlb, encoding='utf-8')
         bot.sendPhoto(chat_id,photo)
-    elif command == '/ip': #[ Get Real IP ]#
+    elif command == '/ip': #* Get Real IP *#
         x = subprocess.check_output(['curl','ipinfo.io/ip'])
         bot.sendMessage(chat_id,x)
-    elif command == '/disk': #[ Get Disk Space ]#
+    elif command == '/disk': #[ Info SSD Server ]#
         x = subprocess.check_output(['df', '-h'])
         bot.sendMessage(chat_id,x)
-    elif command == '/mem': #[ Get Memory ]#
+    elif command == '/mem': #[ Info Memory Server]#
         x = subprocess.check_output(['cat','/proc/meminfo'])
         bot.sendMessage(chat_id,x)
-    elif command == '/stat': #[ Get bot Status ]#
-        bot.sendMessage(chat_id,'Number five is alive!')
+    elif command == '/stat': #[ Status BOT ]#
+        bot.sendMessage(chat_id,'Rin Number five is alive!')
     elif command == '/?' or command=="/start":
         array = search_string_in_file('/opt/rin/rin.py', "/")
         s = "Command List:\n"
