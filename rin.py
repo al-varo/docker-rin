@@ -71,7 +71,7 @@ def handle(msg):
     elif command == '/stat': #[ Get bot Status ]#
         bot.sendMessage(chat_id,'Number five is alive!')
     elif command == '/?' or command=="/start":
-        array = search_string_in_file('/opt/dockerbot/dockerbot.py', "/")
+        array = search_string_in_file('/opt/rin/rin.py', "/")
         s = "Command List:\n"
         for val in array:
             if ")" not in val:
