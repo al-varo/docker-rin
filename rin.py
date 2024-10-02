@@ -50,7 +50,7 @@ def handle(msg):
     if str(chat_id) not in os.getenv('ALLOWED_IDS'):
         bot.sendPhoto(chat_id,"https://github.com/t0mer/dockerbot/raw/master/No-Trespassing.gif")
         return ""
-    #print ('Got command: %s')%command
+    print ('Got command: %s')%command
     if command == '/time': #[ Get Local Time ]#
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
     elif command == '/speed': #[ Run Speedtest ]#
