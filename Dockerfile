@@ -1,5 +1,4 @@
-FROM python:3.9.16-slim-buster
-
+FROM python:3.5.8-slim-buster
 LABEL maintainer="fauzi.mkom@gmail.com"
 RUN apt update -y && \
     apt install -y libffi-dev && \
