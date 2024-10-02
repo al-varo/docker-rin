@@ -94,7 +94,7 @@ def sql_query(sql):
         record=cursor.fetchall()
     except (Exception, psycopg2.Error) as error:
         print(error)
-        global_err=error
+        #global_err=error
         return False
     finally:
         if(conn_serv):
@@ -123,8 +123,8 @@ Total : {}""".format(toko, str(tgl), locale.format("%d", amount_total, 1)) + '\n
                 text = "Tidak ada draft"
         else:
             text=get_server_exception("ambil_data", "Sob")
-    except:
-        text = global_err
+    except Exception as e:
+        text = str(e)
         #text="Gagal memproses data, silahkan dicoba lagi.."
     return text
     
