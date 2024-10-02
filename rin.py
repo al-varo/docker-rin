@@ -21,6 +21,8 @@ SERVER = "app.manzada.net"
 WEBPORT = 80
 TIMEOUT = 3
 RETRY = 1
+global_err=""
+
 sql_draft = "SELECT \
             (SELECT name FROM res_partner WHERE id = ai.partner_id), \
             date_invoice, \
@@ -92,6 +94,7 @@ def sql_query(sql):
         record=cursor.fetchall()
     except (Exception, psycopg2.Error) as error:
         print(error)
+        global_err=error
         return False
     finally:
         if(conn_serv):
@@ -121,7 +124,8 @@ Total : {}""".format(toko, str(tgl), locale.format("%d", amount_total, 1)) + '\n
         else:
             text=get_server_exception("ambil_data", "Sob")
     except:
-            text="Gagal memproses data, silahkan dicoba lagi.."
+        text = global_err
+        #text="Gagal memproses data, silahkan dicoba lagi.."
     return text
     
 def get_omzet(tele_id, nama):
