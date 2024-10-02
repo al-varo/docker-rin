@@ -115,7 +115,7 @@ def get_draft(tele_id, nama):
                     if tgl:
                         if row[2] > 0:
                             tglobj = datetime.datetime.strptime(str(tgl), date_format)
-                            tanggal = tglobj.strftime("%d-m-%Y")
+                            tanggal = tglobj.strftime("%d-%m-%Y")
                             toko = row[0]
                             amount_total = row[2]
                             grand_total+=amount_total
