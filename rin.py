@@ -103,6 +103,7 @@ def sql_query(sql):
             return record
 def get_draft(tele_id, nama):
     text=""
+    date_format = '%d-%m-%Y' 
     user_id=get_manzada_user_id(tele_id)
     try:
         if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
@@ -113,13 +114,14 @@ def get_draft(tele_id, nama):
                     tgl = row[1]
                     if tgl:
                         if row[2] > 0:
+                            tanggal = datetime.datetime.strptime(str(tgl), date_format)
                             toko = row[0]
                             amount_total = row[2]
                             grand_total+=amount_total
                             text=text+"""
 {}
 {}
-Total : {}""".format(toko, str(tgl), ribuan(amount_total)) + '\n'
+Total : {}""".format(toko, str(tanggal), ribuan(amount_total)) + '\n'
                 text=text+"\nGrand Total : {}".format(ribuan(grand_total))
             else:
                 text = "Tidak ada draft"
