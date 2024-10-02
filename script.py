@@ -6,6 +6,10 @@ import configparser # Library for reading from a configuration file, # pip insta
 import datetime # Library that we will need to get the day and time, # pip install datetime
 
 import psycopg2
+import time
+import locale
+import socket
+from dateutil.relativedelta import relativedelta
 
 SERVER = "app.manzada.net"
 WEBPORT = 80
