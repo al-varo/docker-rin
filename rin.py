@@ -276,7 +276,7 @@ def handle(msg):
     if str(chat_id) not in os.getenv('ALLOWED_IDS'):
         bot.sendPhoto(chat_id,"https://github.com/t0mer/dockerbot/raw/master/No-Trespassing.gif")
         return ""
-    if command == '/time': #* Get Local Time *#
+    if command == '__time': #* Get Local Time *#
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
     if command == '/getid': #[ Lihat ID telegram ]#
         bot.sendMessage(chat_id, str(chat_id))
@@ -288,7 +288,7 @@ def handle(msg):
         urlb = re.search(br"(?P<url>http?://[^\s]+)", x).group("url")
         photo = codecs.decode(urlb, encoding='utf-8')
         bot.sendPhoto(chat_id,photo)
-    elif command == '/ip': #* Get Real IP *#
+    elif command == '__ip': #* Get Real IP *#
         x = subprocess.check_output(['curl','ipinfo.io/ip'])
         bot.sendMessage(chat_id,x)
     elif command == '/disk': #[ Info SSD Server ]#
