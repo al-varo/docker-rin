@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   dockerbot:
-    image: techblog/dockerbot
+    image: rin:latest
     container_name: rin
     network_mode: host
     cap_add:
