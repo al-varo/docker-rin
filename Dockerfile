@@ -6,10 +6,6 @@ RUN apt install python3 python3-pip libffi-dev libssl-dev curl speedtest-cli wge
 ENV API_KEY ""
 
 COPY requirements.txt /tmp
-
-
-RUN  pip3 install --upgrade pip --no-cache-dir && \
-     pip3 install --upgrade setuptools --no-cache-dir
      
 RUN pip3 install -r /tmp/requirements.txt
 
