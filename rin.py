@@ -328,7 +328,7 @@ def handle(msg):
     elif command == '__disk': #* Info SSD Server *#
         x = subprocess.check_output(['df', '-h'])
         bot.sendMessage(chat_id,x)
-    elif command == '/mem': #* Info Memory Server *#
+    elif command == '__mem': #* Info Memory Server *#
         x = subprocess.check_output(['cat','/proc/meminfo'])
         bot.sendMessage(chat_id,x)
     elif command == '/stat': #[ Status BOT ]#
