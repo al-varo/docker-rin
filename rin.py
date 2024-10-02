@@ -53,7 +53,7 @@ def handle(msg):
     if command == '/time': #[ Get Local Time ]#
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
     elif command == '/speed': #[ Run Speedtest ]#
-        x = subprocess.check_output(['speedtest-cli','--share'])
+        x = subprocess.check_output(['speedtest','--share'])
         photo = re.search("(?P<url>http?://[^\s]+)", x).group("url")
         bot.sendPhoto(chat_id,photo)
     elif command == '/ip': #[ Get Real IP ]#
