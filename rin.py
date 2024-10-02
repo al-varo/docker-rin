@@ -106,11 +106,12 @@ def get_draft(tele_id, nama):
             record=sql_query(sql_draft.format(9))
             if record:
                 for row in record:
-                    toko = row[0]
                     tgl = row[1]
-                    amount_total = row[2]
-                    grand_total+=amount_total
-                    text=text+"""
+                    if tgl:
+                        toko = row[0]
+                        amount_total = row[2]
+                        grand_total+=amount_total
+                        text=text+"""
 {}
 {}
 Total : {}""".format(toko, str(tgl), locale.format("%d", amount_total, 1)) + '\n'
