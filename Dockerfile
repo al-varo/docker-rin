@@ -21,10 +21,10 @@ RUN pip3 install -r /tmp/requirements.txt
 
 RUN wget https://raw.githubusercontent.com/sivel/speedtest-cli/v2.1.3/speedtest.py -O /usr/lib/python3/dist-packages/speedtest.py
 
-RUN mkdir /opt/dockerbot
+RUN mkdir /opt/rin
 
-COPY dockerbot.py /opt/dockerbot
+COPY rin.py /opt/rin
 
 
 
-ENTRYPOINT ["/usr/bin/python3", "/opt/dockerbot/dockerbot.py"]
+ENTRYPOINT ["/usr/bin/python3", "/opt/rin/rin.py"]
