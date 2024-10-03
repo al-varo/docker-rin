@@ -256,7 +256,7 @@ def get_omzet(tele_id, nama):
 {}
 ----------------------------------
 Grand Total : {}
-```""".format(ribuan(grand_total)[:-3])
+```""".format(textpre,ribuan(grand_total)[:-3])
                 #text=text + '\n\nGrand Total : ' + ribuan(grand_total)
             else:
                 text="Maaf. Rin tidak bisa menemukan data omzet untuk saat ini."
