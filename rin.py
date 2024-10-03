@@ -238,7 +238,7 @@ def get_manzada_user_id(tele_id):
     user_id = 1
     if tele_id == 6729032463: #Agus
         user_id=9
-    if tele_id=='3941390309222663':
+    if tele_id == 7946838453: #Ahmad
         user_id=31
     if tele_id == 7355904419: #Tedi
         user_id=7
@@ -254,7 +254,7 @@ def get_manzada_user_id(tele_id):
         user_id=6
     if tele_id=="6281740698579175":
         user_id=58
-    if tele_id=="6821994781252784":
+    if tele_id == 7980569537: #Fajar
         user_id=59
     return user_id
 
