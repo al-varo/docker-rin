@@ -94,7 +94,7 @@ sql_insentif_salesman = "SELECT \
             0 \
             END),2) as x_persen_pencapaian,\
             (x_total_terjual * \
-            CASE WHEN SUM(x_total_terjual) OVER (window_bersih) >= x_target * 80 / 100 THEN \
+            CASE WHEN SUM(x_total_terjual) OVER (window_bersih) >= x_target * 0.8 THEN \
             x_komisi_produk \
             ELSE \
             0 \
@@ -274,13 +274,13 @@ def get_insentif(tele_id, nama, param=None):
                 total_insentif += insentif
                 text=text+"""
 {}
-Terjual     : {}
-Pencapaian  : {}%
-Insentif    : {}""".format(produk, ribuan(terjual), ribuan(persen), ribuan(insentif))
+Terjual     \t: {}
+Pencapaian  \t: {}%
+Insentif    \t: {}""".format(produk, ribuan(terjual), ribuan(persen), ribuan(insentif))
                 #result.append(text)
                 #text=""
             #if len(result) > 0:
-            text=text+'\n-------------------------'
+            text=text+'\n------------------------------\n'
             text=text+"Total Insentif Produk : " + ribuan(total_insentif)
         else:
             text="Maaf {}. Rin tidak bisa menemukan record insentif.".format(nama)
