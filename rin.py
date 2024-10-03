@@ -94,7 +94,7 @@ sql_insentif_salesman = "SELECT \
             0 \
             END),2) as x_persen_pencapaian,\
             (x_total_terjual * \
-            CASE WHEN SUM(x_total_terjual) OVER (window_bersih) >= x_target * 80/100 THEN \
+            CASE WHEN SUM(x_total_terjual) OVER (window_bersih) >= x_target * 80 / 100 THEN \
             x_komisi_produk \
             ELSE \
             0 \
