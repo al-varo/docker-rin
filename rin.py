@@ -23,7 +23,7 @@ TIMEOUT = 3
 RETRY = 1
 global_err=""
 
-sql_in = "SELECT (SELECT name FROM product_product where product_tmpl_id=sm.product_id) as nama, product_uos_qty from stock_move sm where date >= '2024-10-03' and origin like 'PO%' and sm.name not like 'ROKOK %' order by nama asc;"
+sql_in = "SELECT (SELECT name FROM product_product where product_tmpl_id=sm.product_id) as nama, product_uos_qty from stock_move sm where date = current_date and origin like 'PO%' and sm.name not like 'ROKOK %' order by nama asc;"
 sql_draft = "SELECT \
             (SELECT name FROM res_partner WHERE id = ai.partner_id), \
             date_invoice, \
@@ -466,7 +466,7 @@ def handle(msg):
     elif command == '__inp': #* Lihat Insentif Produk *#
         x = get_insentif(6729032463,"Sob")
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
-    elif command == '__in':
+    elif command == '/in': #[ Info Barang Masuk ]#
         x = get_product_in("Sob")
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command == '__draft':
