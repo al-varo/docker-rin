@@ -254,7 +254,40 @@ def get_omzet(tele_id, nama):
     except Exception as e:
         text="Gagal memproses data, silahkan dicoba lagi.. {}".format(str(e))
     return text
-    
+
+def get_insentif(tele_id, nama, param=None):
+    text=""
+    if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
+        record=sql_query(sql_insentif_salesman.format(get_manzada_user_id(tele_id)))
+        result=[]
+        if record:
+            produk = None
+            terjual = 0
+            persen = 0
+            insentif = 0
+            total_insentif = 0
+            for row in record:
+                produk=row[0]
+                terjual=row[1]
+                persen=row[2]
+                insentif=row[3]
+                total_insentif += insentif
+                text=text+"""
+{}
+Terjual     : {}
+Pencapaian  : {}%
+Insentif    : {}""".format(produk, ribuan(terjual), ribuan(persen), ribuan(insentif))
+                result.append(text)
+                text=""
+            if len(result) > 0:
+                result.append('\n-------------------------')
+                result.append("Total Insentif Produk : " + ribuan(total_insentif))
+        else:
+            result.append("Maaf {}. Rin tidak bisa menemukan record insentif.".format(nama))
+    else:
+        result.append(get_server_exception("ambil_data", nama))
+    return result
+
 def get_server_exception(tipe, nama):
     text=""
     if tipe=="ambil_data":
@@ -387,6 +420,9 @@ def handle(msg):
         bot.sendMessage(chat_id,x)
     elif command == '/draft': #[ Lihat Draft Faktur ]#
         x = get_draft(chat_id,"Sob")
+        bot.sendMessage(chat_id,x)
+    elif command == '__inp': #* Lihat Insentif Produk *#
+        x = get_insentif(6729032463,"Sob")
         bot.sendMessage(chat_id,x)
     elif command == '__draft':
         x = get_draft(6729032463,"Sob")
