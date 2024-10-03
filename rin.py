@@ -83,6 +83,39 @@ sql_omzet_spec = "SELECT \
             WINDOW window_bersih AS (PARTITION BY t.x_user_id) \
             ORDER BY x_pencapaian DESC"
 
+sql_insentif_salesman = "SELECT \
+            concat(\
+            (SELECT name FROM product_template WHERE name=t.x_name), \
+            '(', x_komisi_produk::text, '/', x_target::text, ')') as x_nama_produk, \
+            x_total_terjual,\
+            round((CASE WHEN x_target >0 THEN \
+            ((x_total_terjual/x_target)*100) \
+            ELSE \
+            0 \
+            END),2) as x_persen_pencapaian,\
+            (x_total_terjual * \
+            CASE WHEN SUM(x_total_terjual) OVER (window_bersih) >= x_target * 80/100 THEN \
+            x_komisi_produk \
+            ELSE \
+            0 \
+            END) as x_insentif \
+            FROM(\
+            SELECT \
+            name as x_name, \
+            (SELECT user_id FROM account_invoice WHERE id=ail.invoice_id) as x_user_id,\
+            (SELECT target_penjualan FROM product_template WHERE id = (select product_tmpl_id from product_product where id=ail.product_id)) as x_target,\
+            (SELECT komisi_produk FROM product_template WHERE id = (select product_tmpl_id from product_product where id=ail.product_id)) as x_komisi_produk,\
+            SUM(quantity) as x_total_terjual \
+            FROM account_invoice_line ail \
+            WHERE invoice_id IN (SELECT id FROM account_invoice WHERE state IN ('open', 'paid') \
+            and type='out_invoice' \
+            and user_id = {} and date_trunc('month', date_invoice) = date_trunc('month', current_date)) \
+            AND name IN (SELECT name FROM product_template WHERE target_penjualan > 0) \
+            AND uos_id IN (SELECT id FROM product_uom WHERE uom_type='reference') \
+            GROUP BY x_user_id, x_name, ail.name, ail.product_id \
+            )t \
+            WINDOW window_bersih AS (PARTITION BY t.x_name, t.x_user_id)"
+
 def tcpCheck(ip, port, timeout):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(timeout)
