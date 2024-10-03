@@ -421,6 +421,9 @@ def handle(msg):
     elif command == '/draft': #[ Lihat Draft Faktur ]#
         x = get_draft(chat_id,"Sob")
         bot.sendMessage(chat_id,x)
+    elif command == '/inp': #[ Lihat Insentif Produk ]#
+        x = get_insentif(chat_id,"Sob")
+        bot.sendMessage(chat_id,x)
     elif command == '__inp': #* Lihat Insentif Produk *#
         x = get_insentif(6729032463,"Sob")
         bot.sendMessage(chat_id,x)
