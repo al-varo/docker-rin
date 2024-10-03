@@ -281,7 +281,7 @@ Insentif    : {}""".format(produk, ribuan(terjual), ribuan(persen), ribuan(insen
                 #text=""
             #if len(result) > 0:
             text=text+'\n-------------------------'
-            text=text+"Total Insentif Produk : " + ribuan(total_insentif))
+            text=text+"Total Insentif Produk : " + ribuan(total_insentif)
         else:
             text="Maaf {}. Rin tidak bisa menemukan record insentif.".format(nama)
     else:
