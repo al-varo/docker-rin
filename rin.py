@@ -299,7 +299,9 @@ def get_product_in(nama):
                 produk = row[0]
                 qty = row[1]
                 text=text+"""
-{}\t{}\n""".format(produk, ribuan(qty))
+```
+{}   {}\n
+```""".format(produk, ribuan(qty))
         else:
             text = "Untuk saat ini belum ada pembelian"
     else:
