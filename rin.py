@@ -299,7 +299,7 @@ def get_product_in(nama):
             for row in record:
                 produk = row[0]
                 qty = row[1]
-                textpre=textpre+"{0:<5} {1}".format(produk, ribuan(qty))+"\n"
+                textpre=textpre+"{0:<50} {1}".format(produk, ribuan(qty))+"\n"
             text="""
 ```
 {}
