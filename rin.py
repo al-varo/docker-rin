@@ -289,6 +289,7 @@ Insentif    \t: {}""".format(produk, ribuan(terjual), ribuan(persen), ribuan(ins
         text= get_server_exception("ambil_data", nama)
     return text
 def get_product_in(nama):
+    textpre=""
     text=""
     if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
         record = sql_query(sql_in)
@@ -298,10 +299,11 @@ def get_product_in(nama):
             for row in record:
                 produk = row[0]
                 qty = row[1]
-                text=text+"""
+                textpre=textpre+"{}     {}\n".format(produk, ribuan(qty))
+            text="""
 ```
-{}   {}\n
-```""".format(produk, ribuan(qty))
+{}
+```""".format(textpre)
         else:
             text = "Untuk saat ini belum ada pembelian"
     else:
