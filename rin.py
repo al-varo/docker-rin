@@ -256,6 +256,8 @@ def get_manzada_user_id(tele_id):
         user_id=58
     if tele_id == 7980569537: #Fajar
         user_id=59
+    if tele_id == 7562971233: #Dadang
+        user_id=60
     return user_id
 
 def is_int(s):
