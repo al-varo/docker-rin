@@ -1,0 +1,1 @@
+select (select name from product_product where product_tmpl_id=sm.product_id) as nama, product_uos_qty from stock_move sm where date >= '2024-10-03' and origin like 'PO%' and sm.name not like 'ROKOK %' order by nama asc;
