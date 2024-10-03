@@ -273,16 +273,22 @@ def get_insentif(tele_id, nama, param=None):
                 persen=row[2]
                 insentif=row[3]
                 total_insentif += insentif
-                text=text+"""
+                textpre=textpre+"""
 {}
-Terjual     \t: {}
-Pencapaian  \t: {}%
-Insentif    \t: {}""".format(produk, ribuan(terjual), ribuan(persen), ribuan(insentif))
+Terjual     : {}
+Pencapaian  : {}%
+Insentif    : {}""".format(produk, ribuan(terjual)[:-3], ribuan(persen)[:-3], ribuan(insentif)[:-3])
                 #result.append(text)
                 #text=""
             #if len(result) > 0:
-            text=text+'\n------------------------------\n'
-            text=text+"Total Insentif Produk : " + ribuan(total_insentif)
+            text="""
+```
+{}
+------------------------------------------
+Total Insentif Produk : {}
+```""".format(textpre,ribuan(total_insentif)[:-3])
+            #text=text+'\n------------------------------\n'
+            #text=text+"Total Insentif Produk : " + ribuan(total_insentif)
         else:
             text="Maaf {}. Rin tidak bisa menemukan record insentif.".format(nama)
     else:
@@ -299,7 +305,7 @@ def get_product_in(nama):
             for row in record:
                 produk = row[0]
                 qty = row[1]
-                textpre=textpre+"{0:<50} {1}".format(produk, ribuan(qty))+"\n"
+                textpre=textpre+"{0:<30} {1}".format(produk, ribuan(qty)[:-3])+"\n"
             text="""
 ```
 {}
@@ -445,10 +451,10 @@ def handle(msg):
         bot.sendMessage(chat_id,x)
     elif command == '/inp': #[ Lihat Insentif Produk ]#
         x = get_insentif(chat_id,"Sob")
-        bot.sendMessage(chat_id,x)
+        bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command == '__inp': #* Lihat Insentif Produk *#
         x = get_insentif(6729032463,"Sob")
-        bot.sendMessage(chat_id,x)
+        bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command == '__in':
         x = get_product_in("Sob")
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
