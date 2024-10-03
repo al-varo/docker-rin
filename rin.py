@@ -200,6 +200,7 @@ def get_omzet(tele_id, nama):
     begin_date=str(current_date.year)+' '+str(current_date.month)+' 01'
     end_date=str(current_date.year)+' '+str(current_date.month)+' '+str(last_date)
     text=""
+    textpre=""
     user_id=get_manzada_user_id(tele_id)
     target_sales={
         5:3838464000,
@@ -245,9 +246,18 @@ def get_omzet(tele_id, nama):
                         persentase=row[2]
                     else:
                         persentase=0
-                    text = text + "\n\n" + sales[user_id] + " " + crown + "\n" + ribuan(total_omzet) + "\t" + str(persentase) + "%"
-                    print(text)
-                text=text + '\n\nGrand Total : ' + ribuan(grand_total)
+                    textpre=textpre+"""
+{} {}
+{}  {}""".format(sales[user_id],crown,ribuan(total_omzet)[:-3],str(persentase) + "%")
+                    #text = text + "\n\n" + sales[user_id] + " " + crown + "\n" + ribuan(total_omzet) + "\t" + str(persentase) + "%"
+                    #print(text)
+                text="""
+```
+{}
+----------------------------------
+Grand Total : {}
+```""".format(ribuan(grand_total)[:-3])
+                #text=text + '\n\nGrand Total : ' + ribuan(grand_total)
             else:
                 text="Maaf. Rin tidak bisa menemukan data omzet untuk saat ini."
         else:
@@ -446,7 +456,7 @@ def handle(msg):
         bot.sendMessage(chat_id, str(chat_id))
     elif command == '/omzet': #[ Lihat Pencapaian Omzet ]#
         x = get_omzet(chat_id, "Sob")
-        bot.sendMessage(chat_id,x)
+        bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command == '/draft': #[ Lihat Draft Faktur ]#
         x = get_draft(chat_id,"Sob")
         bot.sendMessage(chat_id,x)
