@@ -446,7 +446,7 @@ def handle(msg):
         x = get_insentif(6729032463,"Sob")
         bot.sendMessage(chat_id,x)
     elif command == '__in':
-        x = get_in("Sob")
+        x = get_product_in("Sob")
         bot.sendMessage(chat_id,x)
     elif command == '__draft':
         x = get_draft(6729032463,"Sob")
