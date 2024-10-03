@@ -277,16 +277,16 @@ def get_insentif(tele_id, nama, param=None):
 Terjual     : {}
 Pencapaian  : {}%
 Insentif    : {}""".format(produk, ribuan(terjual), ribuan(persen), ribuan(insentif))
-                result.append(text)
-                text=""
-            if len(result) > 0:
-                result.append('\n-------------------------')
-                result.append("Total Insentif Produk : " + ribuan(total_insentif))
+                #result.append(text)
+                #text=""
+            #if len(result) > 0:
+            text=text+'\n-------------------------'
+            text=text+"Total Insentif Produk : " + ribuan(total_insentif))
         else:
-            result.append("Maaf {}. Rin tidak bisa menemukan record insentif.".format(nama))
+            text="Maaf {}. Rin tidak bisa menemukan record insentif.".format(nama)
     else:
-        result.append(get_server_exception("ambil_data", nama))
-    return result
+        text=get_server_exception("ambil_data", nama)
+    return text
 
 def get_server_exception(tipe, nama):
     text=""
