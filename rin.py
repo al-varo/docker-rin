@@ -13,7 +13,6 @@ import psycopg2
 import locale
 import operator
 import socket
-import markdown
 from dateutil.relativedelta import relativedelta
 
 locale.setlocale(locale.LC_ALL, '')
@@ -451,8 +450,8 @@ def handle(msg):
         x = get_insentif(6729032463,"Sob")
         bot.sendMessage(chat_id,x)
     elif command == '__in':
-        x = markdown.markdown(get_product_in("Sob"))
-        bot.sendMessage(chat_id,x)
+        x = get_product_in("Sob")
+        bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command == '__draft':
         x = get_draft(6729032463,"Sob")
         bot.sendMessage(chat_id,x)
