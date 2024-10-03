@@ -258,6 +258,7 @@ def get_omzet(tele_id, nama):
 
 def get_insentif(tele_id, nama, param=None):
     text=""
+    textpre=""
     if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
         record=sql_query(sql_insentif_salesman.format(get_manzada_user_id(tele_id)))
         result=[]
