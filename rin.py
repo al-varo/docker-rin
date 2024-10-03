@@ -23,6 +23,7 @@ TIMEOUT = 3
 RETRY = 1
 global_err=""
 
+sql_in = "SELECT (SELECT name FROM product_product where product_tmpl_id=sm.product_id), product_uos_qty from stock_move sm where date >= '2024-10-03' and origin like 'PO%' and sm.name not like 'ROKOK %' order by nama asc;"
 sql_draft = "SELECT \
             (SELECT name FROM res_partner WHERE id = ai.partner_id), \
             date_invoice, \
@@ -285,9 +286,26 @@ Insentif    \t: {}""".format(produk, ribuan(terjual), ribuan(persen), ribuan(ins
         else:
             text="Maaf {}. Rin tidak bisa menemukan record insentif.".format(nama)
     else:
-        text=get_server_exception("ambil_data", nama)
+        text= get_server_exception("ambil_data", nama)
     return text
-
+def get_product_in(nama):
+    text=""
+    if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
+        record = sql_query(sql_in)
+        if record:
+            produk = None
+            qty = 0
+            for row in record:
+                produk = row[0]
+                qty = row[1]
+                text=text+"""
+{}\t{}\n""".format(produk, ribuan(qty))
+        else:
+            text = "Untuk saat ini belum ada pembelian"
+    else:
+        text = get_server_exception("ambil_data", nama)
+    return text
+        
 def get_server_exception(tipe, nama):
     text=""
     if tipe=="ambil_data":
@@ -426,6 +444,9 @@ def handle(msg):
         bot.sendMessage(chat_id,x)
     elif command == '__inp': #* Lihat Insentif Produk *#
         x = get_insentif(6729032463,"Sob")
+        bot.sendMessage(chat_id,x)
+    elif command == '__in':
+        x = get_in("Sob")
         bot.sendMessage(chat_id,x)
     elif command == '__draft':
         x = get_draft(6729032463,"Sob")
