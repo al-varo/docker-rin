@@ -13,6 +13,7 @@ import psycopg2
 import locale
 import operator
 import socket
+import markdown
 from dateutil.relativedelta import relativedelta
 
 locale.setlocale(locale.LC_ALL, '')
@@ -299,7 +300,7 @@ def get_product_in(nama):
             for row in record:
                 produk = row[0]
                 qty = row[1]
-                textpre=textpre+"{}     {}\n".format(produk, ribuan(qty))
+                textpre=textpre+"{}\t{}\n".format(produk, ribuan(qty))
             text="""
 ```
 {}
@@ -450,7 +451,7 @@ def handle(msg):
         x = get_insentif(6729032463,"Sob")
         bot.sendMessage(chat_id,x)
     elif command == '__in':
-        x = get_product_in("Sob")
+        x = markdown.markdown(get_product_in("Sob"))
         bot.sendMessage(chat_id,x)
     elif command == '__draft':
         x = get_draft(6729032463,"Sob")
