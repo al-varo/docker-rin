@@ -206,10 +206,10 @@ def get_omzet(tele_id, nama, bulan=None, tahun=None):
     tgl_akhir=None
     if bulan and tahun:
         try:
-            x,num_days=calendar.monthrange(tahun,bulan)
+            x,num_days=calendar.monthrange(int(tahun),int(bulan))
             x=None
-            tgl_awal = str(tahun) + "-" + str(bulan) + "-01"
-            tgl_akhir = str(tahun) + "-" + str(bulan) + "-" + str(num_days)
+            tgl_awal = tahun + "-" + bulan + "-01"
+            tgl_akhir = tahun + "-" + bulan + "-" + str(num_days)
         except Exception as e:
             print(str(e))
     text=""
