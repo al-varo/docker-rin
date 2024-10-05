@@ -455,6 +455,8 @@ def search_string_in_file(file_name, string_to_search):
 def handle(msg):
     chat_id = msg['chat']['id']
     hmsg = msg['text']
+    current_date = datetime.date.today()
+    current_year = str(current_date.year)
     command = [""]
     if hmsg:
         if hmsg.split():
@@ -469,17 +471,15 @@ def handle(msg):
     elif command[0] == '/omzet': #[ Lihat Pencapaian Omzet ]#
         x = get_omzet(chat_id, "Sob")
         if len(command)>1:
-            x = "Jika ingin cek omzet periode tertentu, anda harus menulis bulan dan tahun dalam format angka yang benar."
-            if len(command) >= 3:
+            x = "Jika ingin cek omzet periode tertentu, anda harus menulis bulan dalam format angka yang benar."
+            if len(command) >= 2:
                 bulan=command[1]
-                tahun=command[2]
-                if bulan.isdigit() and tahun.isdigit():
-                    x = "Pengecekan dibatasi, tidak bisa melewati dibawah bulan 5 2024"
-                    if int(tahun) >= 2024:
-                        x = get_omzet(chat_id, "Sob", bulan, tahun)
-                        if int(tahun) == 2024:
-                            if int(bulan) < 5:
-                                x = "Pengecekan dibatasi, tidak bisa melewati dibawah bulan 5 2024"
+                tahun=current_year
+                if bulan.isdigit():
+                    x = get_omzet(chat_id, "Sob", bulan, tahun)
+                    if int(tahun) == 2024:
+                        if int(bulan) < 5:
+                            x = "Pengecekan dibatasi, tidak bisa melewati dibawah bulan 5 2024"
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command[0] == '/draft': #[ Lihat Draft Faktur ]#
         x = get_draft(chat_id,"Sob")
