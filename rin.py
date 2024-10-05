@@ -202,11 +202,11 @@ def get_omzet(tele_id, nama, bulan=None, tahun=None):
     end_date=str(current_date.year)+' '+str(current_date.month)+' '+str(last_date)
     _=None
     num_days=None
-    tanggal=None
-    if bulan and tahun:
-        _,num_days=calendar.monthrange(tahun,bulan)
-        _=None
-        tanggal = str(tahun) + "-" + str(bulan) + "-" + str(num_days) + " 23:59:59"
+    tanggal='2024-09-30'
+    #if bulan and tahun:
+    #    _,num_days=calendar.monthrange(tahun,bulan)
+    #    _=None
+    #    tanggal = str(tahun) + "-" + str(bulan) + "-" + str(num_days) + " 23:59:59"
     text=""
     textpre=""
     record=None
