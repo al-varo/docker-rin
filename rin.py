@@ -200,14 +200,18 @@ def get_omzet(tele_id, nama, bulan=None, tahun=None):
                             (current_date.month + 1 if current_date.month < 12 else 1), 1) - datetime.timedelta(1)
     begin_date=str(current_date.year)+' '+str(current_date.month)+' 01'
     end_date=str(current_date.year)+' '+str(current_date.month)+' '+str(last_date)
-    _=None
+    x=None
     num_days=None
-    tanggal='2024-09-01'
-    tanggala='2024-09-30'
-    #if bulan and tahun:
-    #    _,num_days=calendar.monthrange(tahun,bulan)
-    #    _=None
-    #    tanggal = str(tahun) + "-" + str(bulan) + "-" + str(num_days) + " 23:59:59"
+    tgl_awal=None
+    tgl_akhir=None
+    if bulan and tahun:
+        try:
+            x,num_days=calendar.monthrange(tahun,bulan)
+            x=None
+            tgl_awal = str(tahun) + "-" + str(bulan) + "-01"
+            tgl_akhir = str(tahun) + "-" + str(bulan) + "-" + str(num_days)
+        except Exception as e:
+            print(str(e)
     text=""
     textpre=""
     record=None
@@ -235,8 +239,8 @@ def get_omzet(tele_id, nama, bulan=None, tahun=None):
         60:"Dadang"}
     try:
         if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
-            if tanggal:
-                record=sql_query(sql_omzet_spec.format(tanggal, tanggala))
+            if tgl_awal and tgl_akhir:
+                record=sql_query(sql_omzet_spec.format(tgl_awal, tgl_akhir))
             else:
                 record=sql_query(sql_omzet)
             if record:
