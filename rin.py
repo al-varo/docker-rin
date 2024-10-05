@@ -468,18 +468,12 @@ def handle(msg):
     elif command[0] == '/omzet': #[ Lihat Pencapaian Omzet ]#
         x = get_omzet(chat_id, "Sob")
         if len(command)>1:
+            x = "Jika ingin cek omzet periode tertentu, anda harus menulis bulan dan tahun dalam format angka yang benar."
             if len(command) >= 3:
                 bulan=command[1]
                 tahun=command[2]
-                check_bulan=False
-                check_tahun=False
-                if bulan.isdigit():
-                    if tahun.isdigit():
-                else:
-                    x = "Jika ingin cek omzet periode tertentu, anda harus menulis bulan dalam bentuk angka"
-                x = get_omzet(chat_id, "Sob", bulan, tahun)
-            else:
-                x = "Periksa penulisan."
+                if bulan.isdigit() and tahun.isdigit():
+                    x = get_omzet(chat_id, "Sob", bulan, tahun)
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command[0] == '/draft': #[ Lihat Draft Faktur ]#
         x = get_draft(chat_id,"Sob")
