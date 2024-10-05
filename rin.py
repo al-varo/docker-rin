@@ -76,7 +76,7 @@ sql_omzet_spec = "SELECT \
             FROM \
             (SELECT \
             user_id as x_user_id, \
-            SUM(amount_total) filter (WHERE  (state ='open' or state='paid') and type='out_invoice' and date_trunc('month', date_invoice) = date_trunc('month', '{}')) \
+            SUM(amount_total) filter (WHERE  (state ='open' or state='paid') and type='out_invoice' and date_trunc('month', date_invoice) = date_trunc('month', date('{}'))) \
             AS x_total_omzet \
             FROM account_invoice \
             WHERE user_id=5 or user_id=7 or user_id=9 or user_id=31 or user_id=44 or user_id=59 or user_id=60 \
