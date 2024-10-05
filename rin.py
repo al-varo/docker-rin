@@ -1,6 +1,7 @@
 import time
 import re
 import random
+import calendar
 import datetime
 import telepot
 from subprocess import call
@@ -23,7 +24,7 @@ TIMEOUT = 3
 RETRY = 1
 global_err=""
 
-sql_in = "SELECT (SELECT name FROM product_product where product_tmpl_id=sm.product_id) as nama, product_uos_qty from stock_move sm where date >= current_date and origin like 'PO%' and sm.name not like 'ROKOK %' order by nama asc;"
+sql_in = "SELECT (SELECT name FROM product_product where product_tmpl_id=sm.product_id) as nama, product_uos_qty from stock_move sm where date >= current_date and origin like 'PO%' and sm.name not like 'ROKOK %' order by nama asc"
 sql_draft = "SELECT \
             (SELECT name FROM res_partner WHERE id = ai.partner_id), \
             date_invoice, \
@@ -75,7 +76,7 @@ sql_omzet_spec = "SELECT \
             FROM \
             (SELECT \
             user_id as x_user_id, \
-            SUM(amount_total) filter (WHERE  (state ='open' or state='paid') and type='out_invoice' and date_trunc('month', date_invoice) = date_trunc('month', {})) \
+            SUM(amount_total) filter (WHERE  (state ='open' or state='paid') and type='out_invoice' and date_trunc('month', date_invoice) = date_trunc('month', '{}')) \
             AS x_total_omzet \
             FROM account_invoice \
             WHERE user_id=5 or user_id=7 or user_id=9 or user_id=31 or user_id=44 or user_id=59 or user_id=60 \
@@ -193,14 +194,18 @@ Total : {}""".format(toko, str(tanggal), ribuan(amount_total)) + '\n'
         #text="Gagal memproses data, silahkan dicoba lagi.."
     return text
     
-def get_omzet(tele_id, nama):
+def get_omzet(tele_id, nama, bulan=None, tahun=None):
     current_date = datetime.date.today()
     last_date=datetime.date(current_date.year + (current_date.month == 12), 
                             (current_date.month + 1 if current_date.month < 12 else 1), 1) - datetime.timedelta(1)
     begin_date=str(current_date.year)+' '+str(current_date.month)+' 01'
     end_date=str(current_date.year)+' '+str(current_date.month)+' '+str(last_date)
+    _,num_days=calendar.monthrange(tahun,bulan)
+    _=None
+    tanggal = tahun + "-" + bulan + "-" + str(num_days)
     text=""
     textpre=""
+    record=None
     user_id=get_manzada_user_id(tele_id)
     target_sales={
         5:3838464000,
@@ -225,7 +230,10 @@ def get_omzet(tele_id, nama):
         60:"Dadang"}
     try:
         if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
-            record=sql_query(sql_omzet)
+            if bulan and tahun:
+                record=sql_query(sql_omzet_spec.format(tanggal))
+            else:
+                record=sql_query(sql_omzet)
             if record:
                 total_omzet = 0
                 grand_total = 0
