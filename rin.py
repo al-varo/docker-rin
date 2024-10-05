@@ -474,7 +474,12 @@ def handle(msg):
                 bulan=command[1]
                 tahun=command[2]
                 if bulan.isdigit() and tahun.isdigit():
-                    x = get_omzet(chat_id, "Sob", bulan, tahun)
+                    x = "Pengecekan dibatasi, tidak bisa melewati dibawah bulan 5 2024"
+                    if int(tahun) >= 2024:
+                        x = get_omzet(chat_id, "Sob", bulan, tahun)
+                        if int(tahun) == 2024:
+                            if int(bulan) < 5:
+                                x = "Pengecekan dibatasi, tidak bisa melewati dibawah bulan 5 2024"
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command[0] == '/draft': #[ Lihat Draft Faktur ]#
         x = get_draft(chat_id,"Sob")
