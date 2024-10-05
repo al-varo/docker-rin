@@ -76,7 +76,7 @@ sql_omzet_spec = "SELECT \
             FROM \
             (SELECT \
             user_id as x_user_id, \
-            SUM(amount_total) filter (WHERE  (state ='open' or state='paid') and type='out_invoice' and date_trunc('month', date_invoice) = date_trunc('month', '{}')) \
+            SUM(amount_total) filter (WHERE  (state ='open' or state='paid') and type='out_invoice' and date_invoice >= '{}' and date_invoice <= '{}') \
             AS x_total_omzet \
             FROM account_invoice \
             WHERE user_id=5 or user_id=7 or user_id=9 or user_id=31 or user_id=44 or user_id=59 or user_id=60 \
@@ -202,7 +202,8 @@ def get_omzet(tele_id, nama, bulan=None, tahun=None):
     end_date=str(current_date.year)+' '+str(current_date.month)+' '+str(last_date)
     _=None
     num_days=None
-    tanggal='30-09-2024'
+    tanggal='2024-09-01'
+    tanggala=2024-09-30'
     #if bulan and tahun:
     #    _,num_days=calendar.monthrange(tahun,bulan)
     #    _=None
@@ -235,7 +236,7 @@ def get_omzet(tele_id, nama, bulan=None, tahun=None):
     try:
         if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
             if tanggal:
-                record=sql_query(sql_omzet_spec.format(tanggal))
+                record=sql_query(sql_omzet_spec.format(tanggal, tanggala))
             else:
                 record=sql_query(sql_omzet)
             if record:
