@@ -453,50 +453,66 @@ def search_string_in_file(file_name, string_to_search):
 
 def handle(msg):
     chat_id = msg['chat']['id']
-    command = msg['text']
-    
+    hmsg = msg['text']
+    command = [""]
+    if hmsg:
+        if hmsg.split():
+            command = hmsg.split()
     if str(chat_id) not in os.getenv('ALLOWED_IDS'):
         bot.sendPhoto(chat_id,"https://github.com/t0mer/dockerbot/raw/master/No-Trespassing.gif")
         return ""
-    if command == '__time': #* Get Local Time *#
+    if command[0] == '__time': #* Get Local Time *#
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
-    elif command == '/getid': #[ Lihat ID telegram ]#
+    elif command[0] == '/getid': #[ Lihat ID telegram ]#
         bot.sendMessage(chat_id, str(chat_id))
-    elif command == '/omzet': #[ Lihat Pencapaian Omzet ]#
+    elif command[0] == '/omzet': #[ Lihat Pencapaian Omzet ]#
         x = get_omzet(chat_id, "Sob")
+        if len(command)>1:
+            if len(command) >= 3:
+                bulan=command[1]
+                tahun=command[2]
+                check_bulan=False
+                check_tahun=False
+                if bulan.isdigit():
+                    if tahun.isdigit():
+                else:
+                    x = "Jika ingin cek omzet periode tertentu, anda harus menulis bulan dalam bentuk angka"
+                x = get_omzet(chat_id, "Sob", bulan, tahun)
+            else:
+                x = "Periksa penulisan."
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
-    elif command == '/draft': #[ Lihat Draft Faktur ]#
+    elif command[0] == '/draft': #[ Lihat Draft Faktur ]#
         x = get_draft(chat_id,"Sob")
         bot.sendMessage(chat_id,x)
-    elif command == '/inp': #[ Lihat Insentif Produk ]#
+    elif command[0] == '/inp': #[ Lihat Insentif Produk ]#
         x = get_insentif(chat_id,"Sob")
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
-    elif command == '__inp': #* Lihat Insentif Produk *#
+    elif command[0] == '__inp': #* Lihat Insentif Produk *#
         x = get_insentif(6729032463,"Sob")
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
-    elif command == '/in': #[ Info Barang Masuk ]#
+    elif command[0] == '/in': #[ Info Barang Masuk ]#
         x = get_product_in("Sob")
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
-    elif command == '__draft':
+    elif command[0] == '__draft':
         x = get_draft(6729032463,"Sob")
         bot.sendMessage(chat_id,x)
-    elif command == '__speed': #* Lihat Speed Starlink *#
+    elif command[0] == '__speed': #* Lihat Speed Starlink *#
         x = subprocess.check_output(['speedtest','--share'])
         urlb = re.search(br"(?P<url>http?://[^\s]+)", x).group("url")
         photo = codecs.decode(urlb, encoding='utf-8')
         bot.sendPhoto(chat_id,photo)
-    elif command == '__ip': #* Get Real IP *#
+    elif command[0] == '__ip': #* Get Real IP *#
         x = subprocess.check_output(['curl','ipinfo.io/ip'])
         bot.sendMessage(chat_id,x)
-    elif command == '__disk': #* Info SSD Server *#
+    elif command[0] == '__disk': #* Info SSD Server *#
         x = subprocess.check_output(['df', '-h'])
         bot.sendMessage(chat_id,x)
-    elif command == '__mem': #* Info Memory Server *#
+    elif command[0] == '__mem': #* Info Memory Server *#
         x = subprocess.check_output(['cat','/proc/meminfo'])
         bot.sendMessage(chat_id,x)
-    elif command == '/stat': #[ Status BOT ]#
+    elif command[0] == '/stat': #[ Status BOT ]#
         bot.sendMessage(chat_id,'Rin Number five is alive!')
-    elif command == '/?' or command=="/start":
+    elif command[0] == '/?' or command[0]=="/start":
         array = search_string_in_file('/opt/rin/rin.py', "/")
         s = "Command List:\n"
         for val in array:
