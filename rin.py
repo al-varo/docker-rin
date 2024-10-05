@@ -211,7 +211,7 @@ def get_omzet(tele_id, nama, bulan=None, tahun=None):
             tgl_awal = str(tahun) + "-" + str(bulan) + "-01"
             tgl_akhir = str(tahun) + "-" + str(bulan) + "-" + str(num_days)
         except Exception as e:
-            print(str(e)
+            print(str(e))
     text=""
     textpre=""
     record=None
