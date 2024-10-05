@@ -195,26 +195,18 @@ Total : {}""".format(toko, str(tanggal), ribuan(amount_total)) + '\n'
     return text
     
 def get_omzet(tele_id, nama, bulan=None, tahun=None):
-    current_date = datetime.date.today()
-    last_date=datetime.date(current_date.year + (current_date.month == 12), 
-                            (current_date.month + 1 if current_date.month < 12 else 1), 1) - datetime.timedelta(1)
-    begin_date=str(current_date.year)+' '+str(current_date.month)+' 01'
-    end_date=str(current_date.year)+' '+str(current_date.month)+' '+str(last_date)
     x=None
     num_days=None
     tgl_awal=None
     tgl_akhir=None
-    if bulan and tahun:
-        try:
-            x,num_days=calendar.monthrange(int(tahun),int(bulan))
-            x=None
-            tgl_awal = tahun + "-" + bulan + "-01"
-            tgl_akhir = tahun + "-" + bulan + "-" + str(num_days)
-        except Exception as e:
-            print(str(e))
     text=""
     textpre=""
     record=None
+    if bulan and tahun:
+        x,num_days=calendar.monthrange(int(tahun),int(bulan))
+        x=None
+        tgl_awal = tahun + "-" + bulan + "-01"
+        tgl_akhir = tahun + "-" + bulan + "-" + str(num_days)
     user_id=get_manzada_user_id(tele_id)
     target_sales={
         5:3838464000,
