@@ -200,9 +200,13 @@ def get_omzet(tele_id, nama, bulan=None, tahun=None):
                             (current_date.month + 1 if current_date.month < 12 else 1), 1) - datetime.timedelta(1)
     begin_date=str(current_date.year)+' '+str(current_date.month)+' 01'
     end_date=str(current_date.year)+' '+str(current_date.month)+' '+str(last_date)
-    _,num_days=calendar.monthrange(tahun,bulan)
     _=None
-    tanggal = tahun + "-" + bulan + "-" + str(num_days)
+    num_days=None
+    tanggal=None
+    if bulan and tahun:
+        _,num_days=calendar.monthrange(tahun,bulan)
+        _=None
+        tanggal = str(tahun) + "-" + str(bulan) + "-" + str(num_days)
     text=""
     textpre=""
     record=None
@@ -230,7 +234,7 @@ def get_omzet(tele_id, nama, bulan=None, tahun=None):
         60:"Dadang"}
     try:
         if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
-            if bulan and tahun:
+            if tanggal:
                 record=sql_query(sql_omzet_spec.format(tanggal))
             else:
                 record=sql_query(sql_omzet)
