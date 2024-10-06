@@ -461,13 +461,13 @@ def handle(msg):
     command = [""]
     tele_ids={
         6729032463:"Agus",
-        7946838453:"Ahmad",
         7355904419:"Tedi",
         7215922306:"Agung",
-        6169304151:"Zul",
         7980569537:"Fajar",
         7562971233:"Dadang",
         6299219117:"Me"}
+    #7946838453:"Ahmad",
+    #6169304151:"Zul",
     if hmsg:
         if hmsg.split():
             command = hmsg.split()
