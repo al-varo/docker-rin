@@ -477,20 +477,19 @@ def handle(msg):
                 bulan=command[1]
                 tahun=current_year
                 if bulan.isdigit():
+                    passed=True
                     if int(tahun) == 2024:
                         if int(bulan) < 5:
                             x = "Pengecekan dibatasi, tidak bisa melewati dibawah bulan 5 2024"
-                            bulan=None
-                            tahun=None
+                            passed=False
                     if int(bulan) < 1 or int(bulan) > 12:
                         x = "Format bulan salah. harus 1-12"
-                        bulan=None
-                        tahun=None
+                        passed=False
                     if int(bulan) >= int(current_month) and int(bulan) < 13:
                         x = "Masa tidak boleh >= masa sekarang dan tahun berjalan, jika ingin cek pencapaian masa sekarang, ketik /omzet saja."
-                        bulan=None
-                        tahun=None
-                    x = get_omzet(chat_id, "Sob", bulan, tahun)
+                        passed=False
+                    if passed:
+                        x = get_omzet(chat_id, "Sob", bulan, tahun)
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command[0] == '/draft': #[ Lihat Draft Faktur ]#
         x = get_draft(chat_id,"Sob")
