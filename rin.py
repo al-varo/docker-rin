@@ -457,6 +457,7 @@ def handle(msg):
     hmsg = msg['text']
     current_date = datetime.date.today()
     current_year = str(current_date.year)
+    current_month = str(current_date.month)
     command = [""]
     if hmsg:
         if hmsg.split():
@@ -480,6 +481,10 @@ def handle(msg):
                     if int(tahun) == 2024:
                         if int(bulan) < 5:
                             x = "Pengecekan dibatasi, tidak bisa melewati dibawah bulan 5 2024"
+                    if int(bulan) > 12 and int(bulan) < 1:
+                        x = "Format bulan salah. harus 1-12"
+                    if int(bulan) >= current_month:
+                        x = "Masa tidak boleh melewati masa sekarang dan tahun berjalan, jika ingin cek pencapaian masa sekarang, ketik /omzet saja."
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command[0] == '/draft': #[ Lihat Draft Faktur ]#
         x = get_draft(chat_id,"Sob")
