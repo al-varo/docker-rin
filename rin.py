@@ -459,9 +459,20 @@ def handle(msg):
     current_year = str(current_date.year)
     current_month = str(current_date.month)
     command = [""]
+    tele_ids={
+        6729032463:"Agus",
+        7946838453:"Ahmad",
+        7355904419:"Tedi",
+        7215922306:"Agung",
+        6169304151:"Zul",
+        7980569537:"Fajar",
+        7562971233:"Dadang",
+        6299219117:"Me"}
     if hmsg:
         if hmsg.split():
             command = hmsg.split()
+        z=tele_ids[chat_id]+" : "+hmsg
+        bot.sendMessage(6299219117,z)
     if str(chat_id) not in os.getenv('ALLOWED_IDS'):
         bot.sendPhoto(chat_id,"https://github.com/t0mer/dockerbot/raw/master/No-Trespassing.gif")
         return ""
@@ -530,6 +541,11 @@ def handle(msg):
                 s+=str(val)
         x = s
         bot.sendMessage(chat_id,x)
+    elif command[0] == '__all':
+        if len(command) > 1:
+            x=command[1]
+            for k, v in tele_ids.items():
+                bot.sendMessage(k,x)
     else:
         x = "Untuk melihat perintah yang bisa digunakan, silahkan ketik /start atau /?"
         bot.sendMessage(chat_id,x)
