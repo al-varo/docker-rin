@@ -546,7 +546,8 @@ def handle(msg):
             try:
                 x=command[1]
                 for k, v in tele_ids.items():
-                    bot.sendMessage(k,x)
+                    if k:
+                        bot.sendMessage(k,x)
             except Exception as e:
                 bot.sendMessage(chat_id, str(e))
     else:
