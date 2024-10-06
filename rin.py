@@ -481,9 +481,9 @@ def handle(msg):
                     if int(tahun) == 2024:
                         if int(bulan) < 5:
                             x = "Pengecekan dibatasi, tidak bisa melewati dibawah bulan 5 2024"
-                    if int(bulan) > 12 and int(bulan) < 1:
+                    if int(bulan) < 1:
                         x = "Format bulan salah. harus 1-12"
-                    if int(bulan) >= current_month:
+                    if int(bulan) >= int(current_month):
                         x = "Masa tidak boleh melewati masa sekarang dan tahun berjalan, jika ingin cek pencapaian masa sekarang, ketik /omzet saja."
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command[0] == '/draft': #[ Lihat Draft Faktur ]#
