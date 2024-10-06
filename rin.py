@@ -465,6 +465,7 @@ def handle(msg):
         7215922306:"Agung",
         7980569537:"Fajar",
         7562971233:"Dadang",
+        6169304151:"Zul",
         6299219117:"Me"}
     #7946838453:"Ahmad",
     #6169304151:"Zul",
@@ -544,10 +545,12 @@ def handle(msg):
     elif command[0] == '__all':
         if len(command) > 1:
             try:
-                x=command[1]
-                for k, v in tele_ids.items():
-                    if k:
-                        bot.sendMessage(k,x)
+                x=""
+                for r in command:
+                    if r != "__all":
+                        x=x+r+" "
+                #for k, v in tele_ids.items():
+                bot.sendMessage(chat_id,x)
             except Exception as e:
                 bot.sendMessage(chat_id, str(e))
     else:
