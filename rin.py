@@ -543,9 +543,12 @@ def handle(msg):
         bot.sendMessage(chat_id,x)
     elif command[0] == '__all':
         if len(command) > 1:
-            x=command[1]
-            for k, v in tele_ids.items():
-                bot.sendMessage(k,x)
+            try:
+                x=command[1]
+                for k, v in tele_ids.items():
+                    bot.sendMessage(k,x)
+            except Exception as e:
+                bot.sendMessage(chat_id, str(e))
     else:
         x = "Untuk melihat perintah yang bisa digunakan, silahkan ketik /start atau /?"
         bot.sendMessage(chat_id,x)
