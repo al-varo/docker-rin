@@ -549,8 +549,8 @@ def handle(msg):
                 for r in command:
                     if r != "__all":
                         x=x+r+" "
-                #for k, v in tele_ids.items():
-                bot.sendMessage(chat_id,x)
+                for k, v in tele_ids.items():
+                    bot.sendMessage(k,x)
             except Exception as e:
                 bot.sendMessage(chat_id, str(e))
     else:
