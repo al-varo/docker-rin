@@ -314,11 +314,11 @@ Total Insentif Produk : {}
     else:
         text= get_server_exception("ambil_data", nama)
     return text
-def get_product_in(nama):
+def get_product_in(nama,tanggal):
     textpre=""
     text=""
     if check_server(SERVER, WEBPORT, TIMEOUT, RETRY):
-        record = sql_query(sql_in)
+        record = sql_query(sql_in.format(tanggal))
         if record:
             produk = None
             qty = 0
@@ -513,7 +513,7 @@ def handle(msg):
         x = get_insentif(6729032463,"Sob")
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command[0] == '/in': #[ Info Barang Masuk ]#
-        x = get_product_in("Sob")
+        x = get_product_in("Sob",str(current_date))
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command[0] == '__draft':
         x = get_draft(6729032463,"Sob")
