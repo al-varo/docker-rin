@@ -16,7 +16,7 @@ import operator
 import socket
 from dateutil.relativedelta import relativedelta
 
-locale.setlocale(locale.LC_ALL, '')
+#locale.setlocale(locale.LC_ALL, '')
 
 SERVER = "app.manzada.net"
 WEBPORT = 80
