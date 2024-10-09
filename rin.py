@@ -24,7 +24,7 @@ TIMEOUT = 3
 RETRY = 1
 global_err=""
 
-sql_in = "SELECT (SELECT name FROM product_product where product_tmpl_id=sm.product_id) as nama, product_uos_qty from stock_move sm where date >= '{}' and origin like 'PO%' and sm.name not like 'ROKOK %' and state='done' order by nama asc"
+sql_in = "SELECT (SELECT name FROM product_product where product_tmpl_id=sm.product_id) as nama, product_uos_qty, (select name from product_uom where id=sm.product_uom) from stock_move sm where date >= '{}' and origin like 'PO%' and sm.name not like 'ROKOK %' and state='done' order by nama asc"
 sql_draft = "SELECT \
             (SELECT name FROM res_partner WHERE id = ai.partner_id), \
             date_invoice, \
@@ -322,10 +322,12 @@ def get_product_in(nama,tanggal):
         if record:
             produk = None
             qty = 0
+            unit = None
             for row in record:
                 produk = row[0]
                 qty = row[1]
-                textpre=textpre+"{0:<30} {1}".format(produk, ribuan(qty)[:-3])+"\n"
+                unit = row[2]
+                textpre=textpre+"{0:<30} {1} {}".format(produk, ribuan(qty)[:-3], unit)+"\n"
             text="""
 ```
 {}
