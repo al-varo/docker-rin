@@ -155,7 +155,7 @@ def sql_query(sql):
         record=cursor.fetchall()
     except (Exception, psycopg2.Error) as error:
         #print(error)
-        global_err=str(error)
+        #global_err=str(error)
         return False
     finally:
         if(conn_serv):
@@ -515,11 +515,11 @@ def handle(msg):
         x = get_insentif(6729032463,"Sob")
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command[0] == '/in': #[ Info Barang Masuk ]#
-        x = get_product_in("Sob",str(current_date))
-        if x:
+        try:
+            x = get_product_in("Sob",str(current_date))
             bot.sendMessage(chat_id,x,parse_mode="Markdown")
-        else:
-            bot.sendMessage(6299219117,global_err)
+        except Exception as e:
+            bot.sendMessage(6299219117,str(e))
     elif command[0] == '__draft':
         x = get_draft(6729032463,"Sob")
         bot.sendMessage(chat_id,x)
