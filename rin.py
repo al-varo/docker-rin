@@ -327,7 +327,7 @@ def get_product_in(nama,tanggal):
                 produk = row[0]
                 qty = row[1]
                 unit = row[2]
-                textpre=textpre+"{0:<30} {1} {1}".format(produk, ribuan(qty)[:-3], unit)+"\n"
+                textpre=textpre+"{0:<30} {1} {2}".format(produk, ribuan(qty)[:-3], unit)+"\n"
             text="""
 ```
 {}
