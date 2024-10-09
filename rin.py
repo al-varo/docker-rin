@@ -154,9 +154,9 @@ def sql_query(sql):
         cursor.execute(sql)
         record=cursor.fetchall()
     except (Exception, psycopg2.Error) as error:
-        print(error)
-        #global_err=error
-        return False
+        #print(error)
+        $global_err=str(error)
+        return str(error)
     finally:
         if(conn_serv):
             cursor.close()
