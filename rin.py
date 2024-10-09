@@ -24,7 +24,7 @@ TIMEOUT = 3
 RETRY = 1
 global_err=""
 
-sql_in = "SELECT (SELECT name FROM product_product where product_tmpl_id=sm.product_id) as nama, product_uos_qty, (select name from product_uom where id=sm.product_uos) from stock_move sm where date >= '{}' and origin like 'PO%' and sm.name not like 'ROKOK %' and state='done' order by nama asc"
+sql_in = "SELECT (SELECT name FROM product_product where product_tmpl_id=sm.product_id) as nama, product_uos_qty, (select name from product_uom where id=sm.product_uom) from stock_move sm where date >= '{}' and origin like 'PO%' and sm.name not like 'ROKOK %' and state='done' order by nama asc"
 sql_draft = "SELECT \
             (SELECT name FROM res_partner WHERE id = ai.partner_id), \
             date_invoice, \
@@ -155,8 +155,8 @@ def sql_query(sql):
         record=cursor.fetchall()
     except (Exception, psycopg2.Error) as error:
         #print(error)
-        $global_err=str(error)
-        return str(error)
+        global_err=str(error)
+        return False
     finally:
         if(conn_serv):
             cursor.close()
@@ -516,7 +516,10 @@ def handle(msg):
         bot.sendMessage(chat_id,x,parse_mode="Markdown")
     elif command[0] == '/in': #[ Info Barang Masuk ]#
         x = get_product_in("Sob",str(current_date))
-        bot.sendMessage(chat_id,x,parse_mode="Markdown")
+        if x:
+            bot.sendMessage(chat_id,x,parse_mode="Markdown")
+        else:
+            bot.sendMessage(6299219117,global_err)
     elif command[0] == '__draft':
         x = get_draft(6729032463,"Sob")
         bot.sendMessage(chat_id,x)
