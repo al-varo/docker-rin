@@ -486,10 +486,9 @@ def handle(msg):
             try:
                 x=""
                 for r in command:
-                    if r != "*lapor":
+                    if r != "/lapor":
                         x=x+r+" "
-                for k, v in tele_ids.items():
-                    bot.sendMessage(k,x)
+                bot.sendMessage(6299219117, x)
             except Exception as e:
                 bot.sendMessage(chat_id, str(e))
     elif command[0] == '/getid': #[ Lihat ID telegram ]#
