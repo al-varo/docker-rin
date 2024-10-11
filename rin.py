@@ -486,8 +486,7 @@ def handle(msg):
             try:
                 x=""
                 for r in command:
-                    if r != "/lapor":
-                        x=x+r+" "
+                    x=x+r+" "
                 z="Laporan atau request telah dikirim."
                 bot.sendMessage(chat_id, z)
                 bot.sendMessage(6299219117, x)
