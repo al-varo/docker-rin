@@ -481,6 +481,17 @@ def handle(msg):
         return ""
     if command[0] == '__time': #* Get Local Time *#
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
+    elif command[0] == '/lapor': #[ Lapor/request ]#
+        if len(command) > 1:
+            try:
+                x=""
+                for r in command:
+                    if r != "/lapor":
+                        x=x+r+" "
+                for k, v in tele_ids.items():
+                    bot.sendMessage(k,x)
+            except Exception as e:
+                bot.sendMessage(chat_id, str(e))
     elif command[0] == '/getid': #[ Lihat ID telegram ]#
         bot.sendMessage(chat_id, str(chat_id))
     elif command[0] == '/omzet': #[ Lihat Pencapaian Omzet ]#
